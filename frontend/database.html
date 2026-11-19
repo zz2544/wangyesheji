@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--
+  姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
+  页面：数据库连接测试 database.html —— 输入用户名密码实时测试 MySQL 连接
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <title>数据库连接测试 · 星穹科技资讯站</title>
+  <link rel="stylesheet" href="css/Cheney_base.css" />
+  <link rel="stylesheet" href="css/Cheney_database.css" />
+</head>
+<body class="Cheney_body">
+  <nav class="Cheney_nav">
+    <a class="Cheney_nav__brand" href="index.html">
+      <span class="Cheney_nav__logo">✦</span>
+      星穹科技资讯站
+    </a>
+    <ul class="Cheney_nav__links">
+      <li><a class="Cheney_nav__link" href="index.html">首页</a></li>
+      <li><a class="Cheney_nav__link" href="news.html">科技新闻</a></li>
+      <li><a class="Cheney_nav__link" href="gallery.html">图文列表</a></li>
+      <li><a class="Cheney_nav__link Cheney_is-active" href="database.html">数据库测试</a></li>
+    </ul>
+  </nav>
+
+  <main class="Cheney_main">
+    <header class="Cheney_pageHead">
+      <span class="Cheney_pageHead__tag">MySQL 8.0 · cheney_vibe_db</span>
+      <h1 class="Cheney_pageHead__title">数据库<em>连接测试</em></h1>
+      <p class="Cheney_pageHead__desc">
+        填写 MySQL 用户名与密码，点击"测试连接"由后端真实建立一次数据库连接并回传版本号。
+        连不上时会给出错误码与原因，便于课堂演示排错。
+      </p>
+    </header>
+
+    <!-- 接口展示区 -->
+    <section class="Cheney_apiBox">
+      <div class="Cheney_apiBox__head">
+        <span class="Cheney_apiBox__label">后端接口</span>
+        <span class="Cheney_method">POST</span>
+        <code class="Cheney_apiLink" id="Cheney_apiLink">/api/database/test</code>
+        <a class="Cheney_apiLink" href="/api/database/info" target="_blank" rel="noopener" title="GET 接口：在浏览器直接查看当前库配置">/api/database/info ↗</a>
+        <div class="Cheney_apiBox__tools">
+          <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_copyApi">复制接口地址</button>
+          <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_toggleRaw">收起返回数据</button>
+        </div>
+      </div>
+      <pre class="Cheney_code" id="Cheney_apiCode">等待测试…</pre>
+    </section>
+
+    <div class="Cheney_dbLayout">
+      <!-- 左：表单 -->
+      <section class="Cheney_card">
+        <form class="Cheney_dbForm" id="Cheney_dbForm" autocomplete="off">
+          <div class="Cheney_field">
+            <label class="Cheney_field__label" for="Cheney_user">用户名</label>
+            <input class="Cheney_input" id="Cheney_user" name="user" type="text" value="root" required />
+          </div>
+          <div class="Cheney_field">
+            <label class="Cheney_field__label" for="Cheney_password">密码</label>
+            <input class="Cheney_input" id="Cheney_password" name="password" type="password" value="123456" required />
+          </div>
+          <div class="Cheney_dbForm__row">
+            <div class="Cheney_field">
+              <label class="Cheney_field__label" for="Cheney_host">主机</label>
+              <input class="Cheney_input" id="Cheney_host" name="host" type="text" value="127.0.0.1" />
+            </div>
+            <div class="Cheney_field">
+              <label class="Cheney_field__label" for="Cheney_port">端口</label>
+              <input class="Cheney_input" id="Cheney_port" name="port" type="number" value="3306" />
+            </div>
+          </div>
+          <div class="Cheney_field">
+            <label class="Cheney_field__label" for="Cheney_database">数据库名</label>
+            <input class="Cheney_input" id="Cheney_database" name="database" type="text" value="cheney_vibe_db" />
+          </div>
+
+          <div class="Cheney_dbForm__actions">
+            <button class="Cheney_btn Cheney_btn--primary" type="submit" id="Cheney_submit">测试连接</button>
+            <button class="Cheney_btn" type="button" id="Cheney_reset">重置</button>
+          </div>
+
+          <div class="Cheney_dbForm__quick">
+            快速填充：
+            <button type="button" data-cheney-fill="root:root">root / root</button>
+            <button type="button" data-cheney-fill="root:123456">root / 123456</button>
+            <button type="button" data-cheney-fill="root:wrong">错误密码（演示报错）</button>
+          </div>
+        </form>
+
+        <div class="Cheney_notice">
+          默认密码填的是本机 MySQL 实际密码 <strong>123456</strong>；
+          若你的环境是 <strong>root / root</strong>，点上面的快速填充即可。
+        </div>
+      </section>
+
+      <!-- 右：结果 -->
+      <section class="Cheney_dbResult">
+        <div class="Cheney_alert Cheney_alert--info" id="Cheney_resultAlert">
+          <span class="Cheney_alert__icon">i</span>
+          <div id="Cheney_resultText">尚未测试。点击"测试连接"后将在这里显示结果。</div>
+        </div>
+
+        <div class="Cheney_card Cheney_card--flat">
+          <h3 class="Cheney_detail__sideTitle">连接信息</h3>
+          <div class="Cheney_dbKv" id="Cheney_dbInfo">
+            <div class="Cheney_dbKv__item"><span class="Cheney_dbKv__k">MySQL 版本</span><span class="Cheney_dbKv__v">—</span></div>
+            <div class="Cheney_dbKv__item"><span class="Cheney_dbKv__k">当前数据库</span><span class="Cheney_dbKv__v">—</span></div>
+            <div class="Cheney_dbKv__item"><span class="Cheney_dbKv__k">连接耗时</span><span class="Cheney_dbKv__v">—</span></div>
+          </div>
+        </div>
+
+        <div class="Cheney_card Cheney_card--flat">
+          <h3 class="Cheney_detail__sideTitle">库内数据表</h3>
+          <table class="Cheney_table">
+            <thead>
+              <tr><th>表名</th><th>行数（估算）</th></tr>
+            </thead>
+            <tbody id="Cheney_tableBody">
+              <tr><td colspan="2">暂无数据</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="Cheney_footer">
+    星穹科技资讯站 · 张硕 24006380115　|　数据库 cheney_vibe_db　|　表 Cheney_news / Cheney_gallery
+  </footer>
+
+  <script src="js/Cheney_request.js"></script>
+  <script src="js/Cheney_database.js"></script>
+</body>
+</html>

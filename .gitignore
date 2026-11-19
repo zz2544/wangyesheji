@@ -1,0 +1,8 @@
+# 姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
+node_modules/
+.env
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+.vscode/

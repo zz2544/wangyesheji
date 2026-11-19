@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+  姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
+  页面：新闻详情 news-detail.html —— 调用 /api/news/:id
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <title>新闻详情 · 星穹科技资讯站</title>
+  <link rel="stylesheet" href="css/Cheney_base.css" />
+  <link rel="stylesheet" href="css/Cheney_news.css" />
+</head>
+<body class="Cheney_body">
+  <nav class="Cheney_nav">
+    <a class="Cheney_nav__brand" href="index.html">
+      <span class="Cheney_nav__logo">✦</span>
+      星穹科技资讯站
+    </a>
+    <ul class="Cheney_nav__links">
+      <li><a class="Cheney_nav__link" href="index.html">首页</a></li>
+      <li><a class="Cheney_nav__link Cheney_is-active" href="news.html">科技新闻</a></li>
+      <li><a class="Cheney_nav__link" href="gallery.html">图文列表</a></li>
+      <li><a class="Cheney_nav__link" href="database.html">数据库测试</a></li>
+    </ul>
+  </nav>
+
+  <main class="Cheney_main">
+    <header class="Cheney_pageHead">
+      <span class="Cheney_pageHead__tag">接口 · GET /api/news/:id</span>
+      <h1 class="Cheney_pageHead__title">新闻<em>详情</em></h1>
+      <p class="Cheney_pageHead__desc">详情页按路径参数读取单条新闻，每次访问阅读量 +1。</p>
+    </header>
+
+    <section class="Cheney_apiBox">
+      <div class="Cheney_apiBox__head">
+        <span class="Cheney_apiBox__label">后端接口</span>
+        <span class="Cheney_method">GET</span>
+        <a class="Cheney_apiLink" id="Cheney_apiLink" href="/api/news/1" target="_blank" rel="noopener">/api/news/1</a>
+        <div class="Cheney_apiBox__tools">
+          <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_copyApi">复制接口地址</button>
+        </div>
+      </div>
+      <pre class="Cheney_code" id="Cheney_apiCode">正在请求接口…</pre>
+    </section>
+
+    <div class="Cheney_state" id="Cheney_state">正在加载新闻详情…</div>
+
+    <section class="Cheney_detail" id="Cheney_detail" hidden>
+      <article class="Cheney_card">
+        <img class="Cheney_detail__cover" id="Cheney_cover" src="" alt="" />
+        <h2 class="Cheney_detail__title" id="Cheney_title"></h2>
+        <div class="Cheney_detail__meta" id="Cheney_meta"></div>
+        <p class="Cheney_detail__text" id="Cheney_summary"></p>
+        <div class="Cheney_notice" id="Cheney_notice"></div>
+      </article>
+
+      <aside class="Cheney_card Cheney_card--flat">
+        <h3 class="Cheney_detail__sideTitle">字段信息</h3>
+        <div class="Cheney_detail__kv"><span>新闻 ID</span><strong id="Cheney_kvId">—</strong></div>
+        <div class="Cheney_detail__kv"><span>分类</span><strong id="Cheney_kvCategory">—</strong></div>
+        <div class="Cheney_detail__kv"><span>来源</span><strong id="Cheney_kvSource">—</strong></div>
+        <div class="Cheney_detail__kv"><span>作者</span><strong id="Cheney_kvAuthor">—</strong></div>
+        <div class="Cheney_detail__kv"><span>发布时间</span><strong id="Cheney_kvTime">—</strong></div>
+        <div class="Cheney_detail__kv"><span>阅读量</span><strong id="Cheney_kvViews">—</strong></div>
+        <p style="margin-top:18px">
+          <a class="Cheney_btn" href="news.html">← 返回新闻列表</a>
+        </p>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="Cheney_footer">
+    星穹科技资讯站 · 张硕 24006380115　|　接口：<a href="/api/news" target="_blank" rel="noopener">/api/news</a>
+  </footer>
+
+  <script src="js/Cheney_request.js"></script>
+  <script src="js/Cheney_newsDetail.js"></script>
+</body>
+</html>

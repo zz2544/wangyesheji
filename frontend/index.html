@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!--
+  姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
+  页面：首页 index.html —— 个人信息 + canvas 背景动画 + 全部页面导航
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <title>星穹科技资讯站 · 张硕 24006380115</title>
+  <meta name="description" content="张硕 24006380115 · 高级网页设计全栈项目：原生前端 + Node.js/Express + MySQL" />
+  <link rel="stylesheet" href="css/Cheney_base.css" />
+  <link rel="stylesheet" href="css/Cheney_index.css" />
+</head>
+<body class="Cheney_body">
+  <canvas id="Cheney_canvas" class="Cheney_canvas"></canvas>
+
+  <div class="Cheney_shell">
+    <!-- ===== 导航 ===== -->
+    <nav class="Cheney_nav">
+      <a class="Cheney_nav__brand" href="index.html">
+        <span class="Cheney_nav__logo">✦</span>
+        星穹科技资讯站
+      </a>
+      <ul class="Cheney_nav__links">
+        <li><a class="Cheney_nav__link Cheney_is-active" href="index.html">首页</a></li>
+        <li><a class="Cheney_nav__link" href="news.html">科技新闻</a></li>
+        <li><a class="Cheney_nav__link" href="gallery.html">图文列表</a></li>
+        <li><a class="Cheney_nav__link" href="database.html">数据库测试</a></li>
+      </ul>
+    </nav>
+
+    <main class="Cheney_main">
+      <!-- ===== 主视觉 ===== -->
+      <section class="Cheney_hero">
+        <div class="Cheney_hero__text">
+          <span class="Cheney_hero__tagline"><span class="Cheney_hero__dot"></span>VIBE CODING · 全栈实战项目</span>
+          <h1 class="Cheney_hero__title">在星穹之上，<br />读<em>科技前沿</em>的每一条脉络</h1>
+          <p class="Cheney_hero__sub">
+            原生 HTML / CSS / JavaScript 手写前端，Node.js + Express 提供 RESTful 接口，数据落在 MySQL。
+            全程零第三方库、零 CDN，只靠一份 AGENTS.md 规则驱动开发。
+          </p>
+          <ul class="Cheney_metaList">
+            <li class="Cheney_metaList__item">
+              <span class="Cheney_metaList__key">姓　名</span>
+              <span class="Cheney_metaList__val">张硕</span>
+            </li>
+            <li class="Cheney_metaList__item">
+              <span class="Cheney_metaList__key">学　号</span>
+              <span class="Cheney_metaList__val">24006380115</span>
+            </li>
+            <li class="Cheney_metaList__item">
+              <span class="Cheney_metaList__key">项目名称</span>
+              <span class="Cheney_metaList__val">星穹科技资讯站</span>
+            </li>
+            <li class="Cheney_metaList__item">
+              <span class="Cheney_metaList__key">项目类别</span>
+              <span class="Cheney_metaList__val">自选（原创设计）</span>
+            </li>
+          </ul>
+        </div>
+
+        <aside class="Cheney_idCard">
+          <p class="Cheney_idCard__label">DEVELOPER ID CARD</p>
+          <h2 class="Cheney_idCard__name">张硕</h2>
+          <p class="Cheney_idCard__sid">NO. 24006380115</p>
+          <div class="Cheney_idCard__divider"></div>
+          <div class="Cheney_idCard__row"><span>课程</span><strong>高级网页设计</strong></div>
+          <div class="Cheney_idCard__row"><span>后端端口</span><strong>115</strong></div>
+          <div class="Cheney_idCard__row"><span>数据库</span><strong>MySQL · cheney_vibe_db</strong></div>
+          <div class="Cheney_idCard__row"><span>数据表</span><strong>2 张 · 各 10 条</strong></div>
+          <div class="Cheney_idCard__tags">
+            <span class="Cheney_tag">原生 JS</span>
+            <span class="Cheney_tag">Express</span>
+            <span class="Cheney_tag Cheney_tag--violet">RESTful + MVC</span>
+            <span class="Cheney_tag Cheney_tag--mint">MySQL 8.0</span>
+          </div>
+        </aside>
+      </section>
+
+      <!-- ===== 页面导航 ===== -->
+      <h2 class="Cheney_sectionTitle">页面导航 · 已完成页面</h2>
+      <section class="Cheney_navGrid">
+        <a class="Cheney_navCard" href="news.html">
+          <div class="Cheney_navCard__icon">📰</div>
+          <h3 class="Cheney_navCard__title">科技新闻列表</h3>
+          <p class="Cheney_navCard__desc">
+            数据来自数据库表 Cheney_news，页面顶部展示后端接口链接与接口返回的原始数据，
+            支持关键词搜索、分类筛选与分页。
+          </p>
+          <span class="Cheney_navCard__path">/api/news</span>
+          <span class="Cheney_navCard__arrow">→</span>
+        </a>
+
+        <a class="Cheney_navCard" href="gallery.html">
+          <div class="Cheney_navCard__icon Cheney_navCard__icon--violet">🖼️</div>
+          <h3 class="Cheney_navCard__title">图文列表</h3>
+          <p class="Cheney_navCard__desc">
+            独立数据表 Cheney_gallery，配图为本地自绘 SVG，页面同样公开接口地址与返回 JSON，
+            支持标签筛选。
+          </p>
+          <span class="Cheney_navCard__path">/api/gallery</span>
+          <span class="Cheney_navCard__arrow">→</span>
+        </a>
+
+        <a class="Cheney_navCard" href="database.html">
+          <div class="Cheney_navCard__icon Cheney_navCard__icon--mint">🗄️</div>
+          <h3 class="Cheney_navCard__title">数据库连接测试</h3>
+          <p class="Cheney_navCard__desc">
+            输入用户名与密码即可实时测试 MySQL 连接，成功展示版本、库名与表结构，失败给出错误码提示。
+          </p>
+          <span class="Cheney_navCard__path">/api/database/test</span>
+          <span class="Cheney_navCard__arrow">→</span>
+        </a>
+      </section>
+
+      <!-- ===== 说明 ===== -->
+      <h2 class="Cheney_sectionTitle">项目说明</h2>
+      <section class="Cheney_tipGrid">
+        <div class="Cheney_tip">
+          <h3 class="Cheney_tip__title">① 统一响应格式</h3>
+          <p class="Cheney_tip__text">所有接口返回 <code>{ "code": 0, "msg": "提示信息", "data": {...} }</code>，code=0 为成功，非 0 为失败。</p>
+        </div>
+        <div class="Cheney_tip">
+          <h3 class="Cheney_tip__title">② 命名规范</h3>
+          <p class="Cheney_tip__text">CSS 类名、JS 变量与函数、数据库表及字段统一以 <code>Cheney_</code> 开头，便于检索与批改。</p>
+        </div>
+        <div class="Cheney_tip">
+          <h3 class="Cheney_tip__title">③ 记录文件</h3>
+          <p class="Cheney_tip__text">Cheney_prompt.md（提示词）、backend/Cheney_interface.md（接口）、backend/Cheney_database.md（建库 SQL）均只追加不覆盖。</p>
+        </div>
+        <div class="Cheney_tip">
+          <h3 class="Cheney_tip__title">④ 启动方式</h3>
+          <p class="Cheney_tip__text">双击根目录 <code>启动项目.bat</code>，后端在 115 端口同时托管前端页面与 /api 接口。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="Cheney_footer">
+      星穹科技资讯站 · 张硕 24006380115 · 高级网页设计课堂作业　|　
+      前端：原生 HTML/CSS/JS　后端：Node.js + Express（端口 115）　数据库：MySQL
+    </footer>
+  </div>
+
+  <script src="js/Cheney_index.js"></script>
+</body>
+</html>

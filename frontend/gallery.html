@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<!--
+  姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
+  页面：图文列表 gallery.html —— 数据来自数据库表 Cheney_gallery，配图为本地自绘 SVG
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <title>图文列表 · 星穹科技资讯站</title>
+  <link rel="stylesheet" href="css/Cheney_base.css" />
+  <link rel="stylesheet" href="css/Cheney_gallery.css" />
+</head>
+<body class="Cheney_body">
+  <nav class="Cheney_nav">
+    <a class="Cheney_nav__brand" href="index.html">
+      <span class="Cheney_nav__logo">✦</span>
+      星穹科技资讯站
+    </a>
+    <ul class="Cheney_nav__links">
+      <li><a class="Cheney_nav__link" href="index.html">首页</a></li>
+      <li><a class="Cheney_nav__link" href="news.html">科技新闻</a></li>
+      <li><a class="Cheney_nav__link Cheney_is-active" href="gallery.html">图文列表</a></li>
+      <li><a class="Cheney_nav__link" href="database.html">数据库测试</a></li>
+    </ul>
+  </nav>
+
+  <main class="Cheney_main">
+    <header class="Cheney_pageHead">
+      <span class="Cheney_pageHead__tag">数据表 · Cheney_gallery</span>
+      <h1 class="Cheney_pageHead__title">图文<em>列表</em></h1>
+      <p class="Cheney_pageHead__desc">
+        新建独立数据表 Cheney_gallery 存放图文数据，配图使用本地 <code>frontend/images/</code> 下自绘的 SVG 图片，
+        完全离线可用。页面同样公开<strong>后端接口链接</strong>与<strong>返回数据</strong>。
+      </p>
+    </header>
+
+    <!-- 接口展示区 -->
+    <section class="Cheney_apiBox">
+      <div class="Cheney_apiBox__head">
+        <span class="Cheney_apiBox__label">后端接口</span>
+        <span class="Cheney_method">GET</span>
+        <a class="Cheney_apiLink" id="Cheney_apiLink" href="/api/gallery" target="_blank" rel="noopener">/api/gallery</a>
+        <div class="Cheney_apiBox__tools">
+          <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_copyApi">复制接口地址</button>
+          <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_toggleRaw">收起返回数据</button>
+        </div>
+      </div>
+      <pre class="Cheney_code" id="Cheney_apiCode">正在请求接口…</pre>
+    </section>
+
+    <!-- 标签筛选 -->
+    <section class="Cheney_filterBar">
+      <span class="Cheney_filterBar__label">按标签筛选：</span>
+      <button class="Cheney_chip Cheney_is-active" type="button" data-cheney-tag="">全部</button>
+      <button class="Cheney_chip" type="button" data-cheney-tag="芯片">芯片</button>
+      <button class="Cheney_chip" type="button" data-cheney-tag="算力">算力</button>
+      <button class="Cheney_chip" type="button" data-cheney-tag="新能源">新能源</button>
+      <button class="Cheney_chip" type="button" data-cheney-tag="通信">通信</button>
+      <button class="Cheney_chip" type="button" data-cheney-tag="量子">量子</button>
+      <button class="Cheney_chip" type="button" data-cheney-tag="操作系统">操作系统</button>
+    </section>
+
+    <div class="Cheney_state" id="Cheney_state">正在加载图文数据…</div>
+    <ul class="Cheney_galleryGrid" id="Cheney_galleryList"></ul>
+  </main>
+
+  <footer class="Cheney_footer">
+    星穹科技资讯站 · 张硕 24006380115　|　接口：<a href="/api/gallery" target="_blank" rel="noopener">/api/gallery</a>　|　共 <span id="Cheney_total">0</span> 组图文
+  </footer>
+
+  <script src="js/Cheney_request.js"></script>
+  <script src="js/Cheney_gallery.js"></script>
+</body>
+</html>

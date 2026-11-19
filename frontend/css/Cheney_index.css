@@ -1,0 +1,335 @@
+@charset "UTF-8";
+/* ============================================================
+   姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
+   Cheney_index.css —— 首页样式（canvas 背景 + 个人信息 + 页面导航）
+   ============================================================ */
+
+.Cheney_canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.Cheney_shell {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== 首页主视觉 ===== */
+.Cheney_hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: 30px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.Cheney_hero__text {
+  padding: 34px 0;
+}
+
+.Cheney_hero__tagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--Cheney-line-strong);
+  background: rgba(76, 125, 255, 0.14);
+  color: #c6d8ff;
+  font-size: 13.5px;
+  letter-spacing: 1px;
+}
+
+.Cheney_hero__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--Cheney-mint);
+  box-shadow: 0 0 12px var(--Cheney-mint);
+  animation: Cheney_pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes Cheney_pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.72); }
+}
+
+.Cheney_hero__title {
+  margin: 20px 0 12px;
+  font-size: 46px;
+  line-height: 1.22;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.Cheney_hero__title em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--Cheney-cyan) 10%, var(--Cheney-violet) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.Cheney_hero__sub {
+  margin: 0 0 22px;
+  max-width: 520px;
+  color: var(--Cheney-ink-soft);
+  font-size: 16px;
+}
+
+.Cheney_metaList {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 520px;
+}
+
+.Cheney_metaList__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border: 1px solid var(--Cheney-line);
+  border-radius: 13px;
+  background: rgba(15, 24, 50, 0.62);
+  font-size: 14.5px;
+}
+
+.Cheney_metaList__key {
+  flex: 0 0 92px;
+  color: var(--Cheney-ink-muted);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.Cheney_metaList__val {
+  color: var(--Cheney-ink);
+  font-weight: 700;
+}
+
+/* ===== 右侧身份卡 ===== */
+.Cheney_idCard {
+  position: relative;
+  padding: 26px 24px 24px;
+  border: 1px solid var(--Cheney-line-strong);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(56, 189, 248, 0.22), transparent 46%),
+    linear-gradient(160deg, rgba(24, 38, 78, 0.94), rgba(11, 18, 40, 0.94));
+  box-shadow: var(--Cheney-shadow);
+  overflow: hidden;
+}
+
+.Cheney_idCard::after {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.16);
+}
+
+.Cheney_idCard__label {
+  font-size: 12.5px;
+  letter-spacing: 2px;
+  color: var(--Cheney-ink-muted);
+}
+
+.Cheney_idCard__name {
+  margin: 10px 0 2px;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.Cheney_idCard__sid {
+  font-family: var(--Cheney-mono);
+  font-size: 16px;
+  color: var(--Cheney-cyan);
+  letter-spacing: 1.5px;
+}
+
+.Cheney_idCard__divider {
+  height: 1px;
+  margin: 18px 0;
+  background: linear-gradient(90deg, var(--Cheney-line-strong), transparent);
+}
+
+.Cheney_idCard__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--Cheney-ink-soft);
+}
+
+.Cheney_idCard__row strong {
+  color: var(--Cheney-ink);
+  font-weight: 700;
+}
+
+.Cheney_idCard__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+/* ===== 导航区 ===== */
+.Cheney_sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 46px 0 18px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.Cheney_sectionTitle::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--Cheney-line);
+}
+
+.Cheney_navGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.Cheney_navCard {
+  position: relative;
+  display: block;
+  padding: 24px 24px 22px;
+  border: 1px solid var(--Cheney-line);
+  border-radius: var(--Cheney-radius);
+  background:
+    linear-gradient(160deg, rgba(22, 34, 70, 0.85), rgba(10, 17, 38, 0.85));
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.Cheney_navCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(circle at 88% 0%, rgba(56, 189, 248, 0.26), transparent 55%);
+  transition: opacity 0.3s;
+}
+
+.Cheney_navCard:hover {
+  transform: translateY(-5px);
+  border-color: var(--Cheney-line-strong);
+  box-shadow: 0 20px 44px rgba(4, 10, 28, 0.6);
+}
+
+.Cheney_navCard:hover::before {
+  opacity: 1;
+}
+
+.Cheney_navCard__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 14px;
+  border-radius: 13px;
+  font-size: 22px;
+  background: linear-gradient(140deg, rgba(76, 125, 255, 0.9), rgba(56, 189, 248, 0.75));
+  box-shadow: 0 10px 22px rgba(56, 189, 248, 0.26);
+}
+
+.Cheney_navCard__icon--violet {
+  background: linear-gradient(140deg, rgba(167, 139, 250, 0.92), rgba(99, 102, 241, 0.78));
+  box-shadow: 0 10px 22px rgba(167, 139, 250, 0.26);
+}
+
+.Cheney_navCard__icon--mint {
+  background: linear-gradient(140deg, rgba(52, 211, 153, 0.92), rgba(20, 184, 166, 0.78));
+  box-shadow: 0 10px 22px rgba(52, 211, 153, 0.24);
+}
+
+.Cheney_navCard__title {
+  margin: 0 0 6px;
+  font-size: 18.5px;
+  font-weight: 800;
+}
+
+.Cheney_navCard__desc {
+  margin: 0 0 14px;
+  color: var(--Cheney-ink-soft);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.Cheney_navCard__path {
+  font-family: var(--Cheney-mono);
+  font-size: 12.5px;
+  color: var(--Cheney-cyan);
+}
+
+.Cheney_navCard__arrow {
+  position: absolute;
+  right: 22px;
+  bottom: 20px;
+  color: var(--Cheney-cyan);
+  font-size: 18px;
+  transition: transform 0.25s;
+}
+
+.Cheney_navCard:hover .Cheney_navCard__arrow {
+  transform: translateX(5px);
+}
+
+/* ===== 底部说明 ===== */
+.Cheney_tipGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.Cheney_tip {
+  padding: 18px 20px;
+  border: 1px solid var(--Cheney-line);
+  border-radius: 14px;
+  background: rgba(12, 20, 44, 0.62);
+}
+
+.Cheney_tip__title {
+  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #cfe0ff;
+}
+
+.Cheney_tip__text {
+  margin: 0;
+  color: var(--Cheney-ink-muted);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .Cheney_hero {
+    grid-template-columns: 1fr;
+  }
+  .Cheney_hero__title {
+    font-size: 34px;
+  }
+}

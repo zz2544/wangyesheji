@@ -1,0 +1,187 @@
+@charset "UTF-8";
+/* ============================================================
+   姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
+   Cheney_database.css —— 数据库连接测试页样式
+   ============================================================ */
+
+.Cheney_dbLayout {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.Cheney_dbForm {
+  display: grid;
+  gap: 15px;
+}
+
+.Cheney_dbForm__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.Cheney_dbForm__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.Cheney_dbForm__quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 2px;
+  color: var(--Cheney-ink-muted);
+  font-size: 12.8px;
+}
+
+.Cheney_dbForm__quick button {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--Cheney-line);
+  background: rgba(120, 160, 255, 0.08);
+  color: var(--Cheney-ink-soft);
+  font-family: var(--Cheney-mono);
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.Cheney_dbForm__quick button:hover {
+  border-color: var(--Cheney-line-strong);
+  color: #fff;
+}
+
+/* ===== 结果区 ===== */
+.Cheney_dbResult {
+  display: grid;
+  gap: 16px;
+}
+
+.Cheney_alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 13px;
+  border: 1px solid var(--Cheney-line);
+  background: rgba(120, 160, 255, 0.08);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.Cheney_alert__icon {
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.Cheney_alert--success {
+  border-color: rgba(52, 211, 153, 0.42);
+  background: rgba(52, 211, 153, 0.12);
+  color: #c2f5e0;
+}
+
+.Cheney_alert--success .Cheney_alert__icon {
+  background: var(--Cheney-mint);
+  color: #04231a;
+}
+
+.Cheney_alert--error {
+  border-color: rgba(244, 114, 182, 0.42);
+  background: rgba(244, 114, 182, 0.12);
+  color: #ffd0e0;
+}
+
+.Cheney_alert--error .Cheney_alert__icon {
+  background: var(--Cheney-rose);
+  color: #2b0413;
+}
+
+.Cheney_alert--info {
+  border-color: rgba(56, 189, 248, 0.36);
+  background: rgba(56, 189, 248, 0.1);
+  color: #cdeaff;
+}
+
+.Cheney_alert--info .Cheney_alert__icon {
+  background: var(--Cheney-cyan);
+  color: #04212e;
+}
+
+.Cheney_alert strong {
+  color: #fff;
+}
+
+/* ===== 表格 ===== */
+.Cheney_table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.8px;
+}
+
+.Cheney_table th,
+.Cheney_table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--Cheney-line);
+  text-align: left;
+}
+
+.Cheney_table th {
+  color: var(--Cheney-ink-muted);
+  font-weight: 600;
+  font-size: 12.8px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.Cheney_table td {
+  color: var(--Cheney-ink-soft);
+  font-family: var(--Cheney-mono);
+}
+
+.Cheney_table tr:last-child td {
+  border-bottom: none;
+}
+
+.Cheney_dbKv {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.Cheney_dbKv__item {
+  padding: 12px 14px;
+  border: 1px solid var(--Cheney-line);
+  border-radius: 12px;
+  background: rgba(9, 16, 36, 0.72);
+}
+
+.Cheney_dbKv__k {
+  display: block;
+  color: var(--Cheney-ink-muted);
+  font-size: 12.5px;
+  margin-bottom: 5px;
+}
+
+.Cheney_dbKv__v {
+  color: var(--Cheney-ink);
+  font-family: var(--Cheney-mono);
+  font-size: 14.5px;
+  word-break: break-all;
+}
+
+@media (max-width: 900px) {
+  .Cheney_dbLayout {
+    grid-template-columns: 1fr;
+  }
+}

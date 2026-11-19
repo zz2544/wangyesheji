@@ -1,0 +1,21 @@
+<!-- 姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash -->
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="液冷数据中心">
+  <defs>
+    <linearGradient id="Cheney_bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#052e2b" />
+      <stop offset="100%" stop-color="#14b8a6" stop-opacity="0.85" />
+    </linearGradient>
+    <radialGradient id="Cheney_glow" cx="0.8" cy="0.15" r="0.75">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#Cheney_bg)" />
+  <rect width="800" height="500" fill="url(#Cheney_glow)" />
+  <rect x="80" y="330" width="46" height="60" rx="8" fill="#14b8a6" fill-opacity="0.24" /><rect x="176" y="308" width="46" height="82" rx="8" fill="#14b8a6" fill-opacity="0.27" /><rect x="272" y="286" width="46" height="104" rx="8" fill="#14b8a6" fill-opacity="0.3" /><rect x="368" y="264" width="46" height="126" rx="8" fill="#14b8a6" fill-opacity="0.32999999999999996" /><rect x="464" y="242" width="46" height="148" rx="8" fill="#14b8a6" fill-opacity="0.36" /><rect x="560" y="220" width="46" height="170" rx="8" fill="#14b8a6" fill-opacity="0.39" /><rect x="656" y="198" width="46" height="192" rx="8" fill="#14b8a6" fill-opacity="0.42" />
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="60" y="150" fill="#ffffff" font-size="42" font-weight="700">液冷数据中心</text>
+    <text x="60" y="196" fill="#ffffff" fill-opacity="0.72" font-size="20" letter-spacing="3">PUE 1.15</text>
+    <text x="60" y="452" fill="#ffffff" fill-opacity="0.5" font-size="16" letter-spacing="2">张硕 · 24006380115 · 星穹科技资讯站</text>
+  </g>
+</svg>

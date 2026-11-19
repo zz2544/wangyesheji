@@ -1,0 +1,21 @@
+<!-- 姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash -->
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="3nm 智驾芯片">
+  <defs>
+    <linearGradient id="Cheney_bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1a4a" />
+      <stop offset="100%" stop-color="#1e6bff" stop-opacity="0.85" />
+    </linearGradient>
+    <radialGradient id="Cheney_glow" cx="0.8" cy="0.15" r="0.75">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#Cheney_bg)" />
+  <rect width="800" height="500" fill="url(#Cheney_glow)" />
+  <rect x="520" y="300" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="546" y="300" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="572" y="300" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="598" y="300" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="624" y="300" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="650" y="300" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="676" y="300" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="520" y="420" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="546" y="420" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="572" y="420" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="598" y="420" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="624" y="420" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="650" y="420" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="676" y="420" width="12" height="70" rx="6" fill="#1e6bff" fill-opacity="0.3" /><rect x="140" y="330" width="330" height="150" rx="18" fill="none" stroke="#1e6bff" stroke-opacity="0.35" stroke-width="2.5" />
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="60" y="150" fill="#ffffff" font-size="42" font-weight="700">3nm 智驾芯片</text>
+    <text x="60" y="196" fill="#ffffff" fill-opacity="0.72" font-size="20" letter-spacing="3">CHIP · 512 TOPS</text>
+    <text x="60" y="452" fill="#ffffff" fill-opacity="0.5" font-size="16" letter-spacing="2">张硕 · 24006380115 · 星穹科技资讯站</text>
+  </g>
+</svg>

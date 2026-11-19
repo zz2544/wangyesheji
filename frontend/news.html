@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+  姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
+  页面：科技新闻列表 news.html —— 数据来自数据库表 Cheney_news，页面展示接口链接与返回数据
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <title>科技新闻列表 · 星穹科技资讯站</title>
+  <link rel="stylesheet" href="css/Cheney_base.css" />
+  <link rel="stylesheet" href="css/Cheney_news.css" />
+</head>
+<body class="Cheney_body">
+  <nav class="Cheney_nav">
+    <a class="Cheney_nav__brand" href="index.html">
+      <span class="Cheney_nav__logo">✦</span>
+      星穹科技资讯站
+    </a>
+    <ul class="Cheney_nav__links">
+      <li><a class="Cheney_nav__link" href="index.html">首页</a></li>
+      <li><a class="Cheney_nav__link Cheney_is-active" href="news.html">科技新闻</a></li>
+      <li><a class="Cheney_nav__link" href="gallery.html">图文列表</a></li>
+      <li><a class="Cheney_nav__link" href="database.html">数据库测试</a></li>
+    </ul>
+  </nav>
+
+  <main class="Cheney_main">
+    <header class="Cheney_pageHead">
+      <span class="Cheney_pageHead__tag">数据表 · Cheney_news</span>
+      <h1 class="Cheney_pageHead__title">科技<em>新闻列表</em></h1>
+      <p class="Cheney_pageHead__desc">
+        新闻数据存放在 MySQL 表 Cheney_news 中，由后端 Express 按 RESTful 风格以 /api/news 输出。
+        下方同时展示<strong>后端接口链接</strong>与<strong>接口返回的原始 JSON 数据</strong>，浏览器控制台亦同步打印。
+      </p>
+    </header>
+
+    <!-- 接口展示区 -->
+    <section class="Cheney_apiBox">
+      <div class="Cheney_apiBox__head">
+        <span class="Cheney_apiBox__label">后端接口</span>
+        <span class="Cheney_method">GET</span>
+        <a class="Cheney_apiLink" id="Cheney_apiLink" href="/api/news" target="_blank" rel="noopener">/api/news</a>
+        <div class="Cheney_apiBox__tools">
+          <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_copyApi">复制接口地址</button>
+          <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_toggleRaw">收起返回数据</button>
+        </div>
+      </div>
+      <pre class="Cheney_code" id="Cheney_apiCode">正在请求接口…</pre>
+    </section>
+
+    <!-- 检索工具条 -->
+    <section class="Cheney_toolbar">
+      <div class="Cheney_field Cheney_toolbar__grow">
+        <label class="Cheney_field__label" for="Cheney_keyword">关键词（标题 / 摘要）</label>
+        <input class="Cheney_input" id="Cheney_keyword" type="search" placeholder="例如：芯片、6G、鸿蒙" />
+      </div>
+      <div class="Cheney_field">
+        <label class="Cheney_field__label" for="Cheney_category">分类</label>
+        <select class="Cheney_select" id="Cheney_category">
+          <option value="">全部分类</option>
+        </select>
+      </div>
+      <div class="Cheney_field">
+        <label class="Cheney_field__label" for="Cheney_pageSize">每页条数</label>
+        <select class="Cheney_select" id="Cheney_pageSize">
+          <option value="6">6 条</option>
+          <option value="10" selected>10 条</option>
+          <option value="20">20 条</option>
+        </select>
+      </div>
+      <button class="Cheney_btn Cheney_btn--primary" type="button" id="Cheney_searchBtn">查询</button>
+      <span class="Cheney_toolbar__stat">共 <strong id="Cheney_total">0</strong> 条结果</span>
+    </section>
+
+    <div class="Cheney_state" id="Cheney_state">正在加载新闻数据…</div>
+    <ul class="Cheney_newsList" id="Cheney_newsList"></ul>
+    <div class="Cheney_pager" id="Cheney_pager" hidden></div>
+  </main>
+
+  <footer class="Cheney_footer">
+    星穹科技资讯站 · 张硕 24006380115　|　接口：<a href="/api/news" target="_blank" rel="noopener">/api/news</a>　|　后端端口 115
+  </footer>
+
+  <script src="js/Cheney_request.js"></script>
+  <script src="js/Cheney_news.js"></script>
+</body>
+</html>
