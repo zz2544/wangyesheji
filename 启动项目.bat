@@ -1,23 +1,22 @@
 @echo off
-rem ��������˶ | ѧ�ţ�24006380115 | ʱ�䣺2026-11-19 | ��ģ�ͣ�DeepSeek-V4.1-Flash
+rem 姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
 chcp 936 >nul
-title ���Ƽ���Ѷվ - ��˶ 24006380115
+title 星穹科技资讯站 - 张硕 24006380115
 echo ================================================
-echo   ���Ƽ���Ѷվ ���������
-echo   ��������˶   ѧ�ţ�24006380115
+echo   星穹科技资讯站 后端启动中
+echo   姓名：张硕   学号：24006380115
 echo ================================================
 cd /d %~dp0backend
-echo ��ǰĿ¼��%cd%
-echo �������� Express ���񣨶˿� 115��...
-echo ��������Զ��򿪣���δ�򿪣����ֶ�ִ�У�
-echo msedge --explicitly-allowed-ports=115 --user-data-dir="%LOCALAPPDATA%\CheneyEdgeProfile" http://127.0.0.1:115/
+echo 当前目录：%cd%
+echo 正在启动 Express 服务（端口 8115）...
+echo 浏览器将自动打开；若未打开，请手动访问：
+echo http://127.0.0.1:8115/
 echo.
-echo ˵����Chrome/Edge Ĭ�Ϸ��� 115 �˿ڣ�ERR_UNSAFE_PORT����
-echo       ��������������� --explicitly-allowed-ports=115��
-echo �رձ����ڼ�ֹͣ����
+echo 说明：端口 8115 是 Chromium 安全端口，Chrome/Edge 直接访问即可。
+echo 关闭本窗口即停止服务。
 echo ------------------------------------------------
 start "" /b node scripts\Cheney_openBrowser.js
 node app.js
 echo.
-echo ������ֹͣ����Ϊ�쳣�˳�������˿� 115 �Ƿ�ռ�ã���
+echo 服务已停止（若为异常退出，请检查端口 8115 是否被占用）。
 pause

@@ -338,3 +338,188 @@
 ```
 
 - **修改时间**：2026-11-19 13:35（2026-11-19 14:06 复核）
+
+---
+
+## 9. 知识库文件上传
+
+- **接口路径**：`/api/knowledge/upload`
+- **HTTP 方法**：`POST`
+- **Content-Type**：`multipart/form-data`，字段名 `file`
+- **请求体**：单个文件，支持 PDF / TXT / DOC / DOCX / PPT / PPTX，最大 20MB
+- **修改时间**：2026-11-23 14:32（实测通过）
+
+成功响应（HTTP 201）：
+
+```json
+{
+  "code": 0,
+  "msg": "知识库文件上传并解析成功",
+  "data": {
+    "Cheney_id": 3,
+    "Cheney_original_name": "Cheney_product_faq.docx",
+    "Cheney_extension": "docx",
+    "Cheney_size": 5677,
+    "Cheney_status": "ready",
+    "Cheney_error": null,
+    "Cheney_chunk_count": 6,
+    "Cheney_created_at": "2026-11-23 14:38:01",
+    "Cheney_updated_at": "2026-11-23 14:38:01"
+  }
+}
+```
+
+错误响应：扩展名不支持（HTTP 415）、文件超 20MB（HTTP 400）、签名不正确（HTTP 400）、Office 转换失败（HTTP 400，返回 `data.cheney_id` 供重建）。
+
+---
+
+## 10. 知识库文件列表
+
+- **接口路径**：`/api/knowledge/documents`
+- **HTTP 方法**：`GET`
+- **请求参数**：无
+- **成功响应**（HTTP 200）：
+
+```json
+{
+  "code": 0,
+  "msg": "知识库文件列表获取成功",
+  "data": {
+    "cheney_total": 2,
+    "cheney_list": [
+      {
+        "Cheney_id": 3,
+        "Cheney_original_name": "Cheney_product_faq.docx",
+        "Cheney_extension": "docx",
+        "Cheney_size": 5677,
+        "Cheney_status": "ready",
+        "Cheney_error": null,
+        "Cheney_chunk_count": 6,
+        "Cheney_created_at": "2026-11-23 14:38:01",
+        "Cheney_updated_at": "2026-11-23 14:38:01"
+      }
+    ]
+  }
+}
+```
+
+- **修改时间**：2026-11-23 14:32（实测通过）
+
+---
+
+## 11. 知识库文件详情（含分块）
+
+- **接口路径**：`/api/knowledge/documents/:id`
+- **HTTP 方法**：`GET`
+- **成功响应**（HTTP 200）：
+
+```json
+{
+  "code": 0,
+  "msg": "知识库文件详情获取成功",
+  "data": {
+    "cheney_document": { /* 文档基础信息 */ },
+    "cheney_chunks": [
+      { "Cheney_id": 40, "Cheney_document_id": 3, "Cheney_chunk_index": 1, "Cheney_content": "……" }
+    ]
+  }
+}
+```
+
+- **修改时间**：2026-11-23 14:32（实测通过）
+
+---
+
+## 12. 删除知识库文件
+
+- **接口路径**：`/api/knowledge/documents/:id`
+- **HTTP 方法**：`DELETE`
+- **副作用**：数据库文档记录 + 级联分块 + 磁盘原始文件全部删除
+- **成功响应**（HTTP 200）：`{ "code": 0, "msg": "知识库文件已删除", "data": { "cheney_id": 3 } }`
+- **修改时间**：2026-11-23 14:32（实测通过）
+
+---
+
+## 13. 重新解析知识库文件
+
+- **接口路径**：`/api/knowledge/documents/:id/rebuild`
+- **HTTP 方法**：`POST`
+- **说明**：从服务器保留的原始文件重新执行解析与分块；用于修复解析程序或重试失败文件
+- **成功响应**（HTTP 200）：与上传成功结构相同
+- **修改时间**：2026-11-23 14:32（实测通过）
+
+---
+
+## 14. 基于知识库的 RAG 问答
+
+- **接口路径**：`/api/knowledge/chat`
+- **HTTP 方法**：`POST`
+- **Content-Type**：`application/json`
+- **请求参数**：
+
+| 参数 | 类型 | 必填 | 默认 | 说明 |
+| --- | --- | --- | --- | --- |
+| `question` | string | 是 | — | 问题文本，≤ 2000 字符 |
+| `documentId` | number | 否 | 0 | 限定检索的文档 ID；0 表示搜索全部已就绪文件 |
+| `topK` | number | 否 | 5 | 最多返回知识块数量，范围 1–8 |
+
+成功响应分三种路径：
+
+**路径 A：未检索到相关知识（`cheney_used_model=false`，不调用大模型）**
+
+```json
+{
+  "code": 0,
+  "msg": "未检索到足够相关知识",
+  "data": {
+    "cheney_answer": "知识库未找到与该问题相关的内容……",
+    "cheney_sources": [],
+    "cheney_used_model": false,
+    "cheney_model": null
+  }
+}
+```
+
+**路径 B：有相关知识但未配置 API Key（HTTP 503，仍返回检索引用）**
+
+```json
+{
+  "code": 503,
+  "msg": "DeepSeek 尚未配置：请在 backend/.env 中设置 OPENAI_API_KEY 后重启服务",
+  "data": {
+    "cheney_sources": [
+      {
+        "cheney_document_id": 2,
+        "cheney_document_name": "Cheney_service_policy.pptx",
+        "cheney_chunk_index": 3,
+        "cheney_score": 0.2999,
+        "cheney_excerpt": "……"
+      }
+    ]
+  }
+}
+```
+
+**路径 C：完整调用 DeepSeek（HTTP 200，真实部署后）**
+
+```json
+{
+  "code": 0,
+  "msg": "知识库问答完成",
+  "data": {
+    "cheney_answer": "标准软件授权自交付之日起保修十二个月……参考来源：Cheney_service_policy.pptx，知识块 3。",
+    "cheney_sources": [/* 同路径 B */],
+    "cheney_used_model": true,
+    "cheney_model": "deepseek-chat",
+    "cheney_usage": { "prompt_tokens": 100, "completion_tokens": 30, "total_tokens": 130 }
+  }
+}
+```
+
+- **修改时间**：2026-11-23 14:50（本地模型模拟 + 控制台收发日志实测通过；真实 DeepSeek 待用户配置 `OPENAI_API_KEY`）
+- **后端控制台日志**：每次请求会打印 RAG 检索结果、完整 POST JSON、HTTP 响应和原始响应体；**不打印** API Key。
+- **实测验证（真实大模型调用）**：2026-11-23 15:41，端口 8115。
+  `POST /api/knowledge/chat` 返回 HTTP 200 / `code=0` / `cheney_used_model=true`，
+  模型 `deepseek-v4.1-flash-1017` @ `https://maas.qianwenaiapi.com/compatible-mode/v1`，
+  `usage`：prompt 1067、completion 129、total 1196；检索命中 `Cheney_service_policy.pptx` 知识块 1 与 3。
+  密钥已迁至 Windows 用户级环境变量 `OPENAI_API_KEY`，`backend/.env` 不再保存明文（可提交模板见 `backend/.env.example`）。

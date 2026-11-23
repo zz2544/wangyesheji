@@ -43,8 +43,13 @@ Cheney_app.use((req, res) => {
 
 // 统一错误处理
 Cheney_app.use((err, req, res, next) => {
+  const Cheney_status = err.Cheney_status || err.status || 500;
   console.error('服务器错误：', err.message);
-  res.status(500).json(Cheney_fail(`服务器内部错误：${err.message}`, 500));
+  res.status(Cheney_status).json(Cheney_fail(
+    err.message || '服务器内部错误',
+    Cheney_status,
+    err.Cheney_data || {}
+  ));
 });
 
 Cheney_app.listen(Cheney_PORT, () => {

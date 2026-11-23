@@ -6,3 +6,5 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 .vscode/
+backend/storage/Cheney_uploads/
+backend/storage/Cheney_temp/

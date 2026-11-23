@@ -1,14 +1,17 @@
 /**
  * 姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
- * 作用：启动项目时用 Edge/Chrome 打开页面。Chromium 内核默认把 115 视为不安全端口，
- *       因此必须带 --explicitly-allowed-ports 启动，并使用独立用户目录避免复用已运行实例。
+ * 作用：启动项目时用 Edge/Chrome 打开页面。端口取自 backend/.env 的 PORT（默认 8115），
+ *       注意 115 是 Chromium 的不安全端口，绝不能作为默认值；并带独立用户目录避免复用已运行实例。
  */
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 
-const Cheney_port = Number(process.env.PORT || 115);
+// 本脚本被 bat 单独启动，不会经过 app.js，必须自己加载 .env，否则读不到 PORT 会退回错误端口
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+
+const Cheney_port = Number(process.env.PORT || 8115);
 const Cheney_url = `http://127.0.0.1:${Cheney_port}/`;
 const Cheney_profile = path.join(process.env.LOCALAPPDATA || os.tmpdir(), 'CheneyEdgeProfile');
 const Cheney_candidates = [
@@ -31,14 +34,15 @@ const Cheney_args = [
 setTimeout(() => {
   if (!Cheney_browser) {
     console.log('未找到 Edge/Chrome，请手动访问：' + Cheney_url);
-    console.log(`若浏览器提示 ERR_UNSAFE_PORT，请加参数：--explicitly-allowed-ports=${Cheney_port}`);
     return;
   }
   try {
     const Cheney_child = spawn(Cheney_browser, Cheney_args, { detached: true, stdio: 'ignore' });
     Cheney_child.unref();
     console.log('已打开浏览器：' + Cheney_url);
-    console.log(`（启动参数含 --explicitly-allowed-ports=${Cheney_port}，用于放行 Chromium 的不安全端口限制）`);
+    if (Cheney_port === 115) {
+      console.log('警告：115 是 Chromium 的不安全端口，浏览器会报 ERR_UNSAFE_PORT，请改用 8115。');
+    }
   } catch (Cheney_err) {
     console.error('自动打开浏览器失败：', Cheney_err.message);
     console.log('请手动访问：' + Cheney_url);

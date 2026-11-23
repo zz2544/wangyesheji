@@ -174,3 +174,78 @@ LIMIT 3;
 | 2026-11-19 13:34 | 建表 `Cheney_news` + 10 条 INSERT | 科技新闻，含发布时间索引与分类索引 |
 | 2026-11-19 13:34 | 建表 `Cheney_gallery` + 10 条 INSERT | 图文列表，含排序索引 |
 | 2026-11-19 14:06 | 复核 | `Cheney_news=10`、`Cheney_gallery=10`，接口读取正常 |
+| 2026-11-23 14:28 | 建表 `Cheney_kb_documents` + `Cheney_kb_chunks` | RAG 知识库管理表；保留 `Cheney_news`/`Cheney_gallery` 原有 10+10 条数据 |
+| 2026-11-23 14:32 | 上传解析 2 个示例文件 | `Cheney_product_faq.docx` 6 块、`Cheney_service_policy.pptx` 3 块，均 ready |
+| 2026-11-23 14:44 | 复测通过 6 种格式 | DOC / PPT / DOCX / PPTX / PDF / TXT 均成功上传并解析；最终保留 2 个示例文件 9 个知识块 |
+
+---
+
+## 五、知识库表（2026-11-23 追加）
+
+### 6. 知识库文件表 Cheney_kb_documents
+
+```sql
+CREATE TABLE IF NOT EXISTS Cheney_kb_documents (
+  Cheney_id             INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '知识文件主键',
+  Cheney_original_name  VARCHAR(255) NOT NULL COMMENT '原始文件名',
+  Cheney_stored_name    VARCHAR(255) NOT NULL COMMENT '服务器存储文件名（UUID）',
+  Cheney_file_path      VARCHAR(500) NOT NULL COMMENT '服务器相对路径',
+  Cheney_extension      VARCHAR(10)  NOT NULL COMMENT '文件扩展名（无点）',
+  Cheney_mime           VARCHAR(120) DEFAULT NULL COMMENT 'MIME 类型',
+  Cheney_size           INT UNSIGNED NOT NULL COMMENT '文件字节数',
+  Cheney_sha256         CHAR(64)     NOT NULL COMMENT '文件 SHA-256',
+  Cheney_status         ENUM('processing','ready','failed') NOT NULL DEFAULT 'processing' COMMENT '解析状态',
+  Cheney_error          TEXT         DEFAULT NULL COMMENT '失败原因',
+  Cheney_chunk_count    INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '知识块数量',
+  Cheney_created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
+  Cheney_updated_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (Cheney_id),
+  UNIQUE KEY Cheney_uq_kb_stored_name (Cheney_stored_name),
+  KEY Cheney_idx_kb_status (Cheney_status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='RAG 知识库文件表';
+```
+
+### 7. 知识文本分块表 Cheney_kb_chunks
+
+```sql
+CREATE TABLE IF NOT EXISTS Cheney_kb_chunks (
+  Cheney_id           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '知识块主键',
+  Cheney_document_id  INT UNSIGNED NOT NULL COMMENT '所属知识文件',
+  Cheney_chunk_index  INT UNSIGNED NOT NULL COMMENT '文档内块序号（从 1 开始）',
+  Cheney_content      TEXT NOT NULL COMMENT '知识块正文',
+  PRIMARY KEY (Cheney_id),
+  UNIQUE KEY Cheney_uq_kb_document_chunk (Cheney_document_id, Cheney_chunk_index),
+  KEY Cheney_idx_kb_chunk_document (Cheney_document_id),
+  CONSTRAINT Cheney_fk_kb_chunk_document
+    FOREIGN KEY (Cheney_document_id) REFERENCES Cheney_kb_documents (Cheney_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='RAG 知识文本分块表';
+```
+
+### 字段说明（追加）
+
+| 表 | 字段 | 说明 |
+| --- | --- | --- |
+| `Cheney_kb_documents` | `Cheney_original_name` | 用户上传的原始文件名，前端显示 |
+|  | `Cheney_stored_name` | 服务器 UUID 存储名，与原始名解耦 |
+|  | `Cheney_status` | `processing` 解析中 → `ready` 就绪 / `failed` 失败（含 `Cheney_error`） |
+|  | `Cheney_chunk_count` | 解析成功时写入，重建时事务更新 |
+| `Cheney_kb_chunks` | `Cheney_document_id` | 外键级联删除，删文档自动清分块 |
+|  | `Cheney_chunk_index` | 文档内 1 起始序号 |
+|  | `Cheney_content` | 约 700 字优先按段落/句号切分，相邻块 80 字重叠 |
+
+### 验证数据（2026-11-23 实测）
+
+```sql
+USE cheney_vibe_db;
+SELECT (SELECT COUNT(*) FROM Cheney_news) AS news_count,
+       (SELECT COUNT(*) FROM Cheney_gallery) AS gallery_count,
+       (SELECT COUNT(*) FROM Cheney_kb_documents) AS document_count,
+       (SELECT COUNT(*) FROM Cheney_kb_chunks) AS chunk_count;
+-- 结果：news=10, gallery=10, kb_documents=2, kb_chunks=9
+
+SELECT Cheney_id, Cheney_original_name, Cheney_chunk_count, Cheney_status
+FROM Cheney_kb_documents ORDER BY Cheney_id;
+-- Cheney_product_faq.docx    | 6 | ready
+-- Cheney_service_policy.pptx | 3 | ready
+```

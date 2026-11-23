@@ -1,0 +1,428 @@
+@charset "UTF-8";
+/* ============================================================
+   姓名：张硕 | 学号：24006380115 | 时间：2026-11-23 | 大模型：Kimi-K3.1-Pro
+   Cheney_knowledge.css —— 知识库文件管理与 RAG 问答页面
+   ============================================================ */
+
+.Cheney_kbLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(330px, 0.85fr);
+  gap: 22px;
+  align-items: start;
+  margin-top: 24px;
+}
+
+.Cheney_kbManage {
+  display: grid;
+  gap: 22px;
+  min-width: 0;
+}
+
+.Cheney_kbSectionHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.Cheney_kbSectionHead h2 {
+  margin: 3px 0 0;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.Cheney_kbEyebrow {
+  color: var(--Cheney-cyan);
+  font-family: var(--Cheney-mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.Cheney_kbDrop {
+  display: flex;
+  min-height: 168px;
+  padding: 24px;
+  border: 1px dashed var(--Cheney-line-strong);
+  border-radius: 15px;
+  background: rgba(6, 11, 24, 0.5);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  text-align: center;
+  color: var(--Cheney-ink-soft);
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.Cheney_kbDrop:hover,
+.Cheney_kbDrop.Cheney_is-dragging {
+  border-color: var(--Cheney-cyan);
+  background: rgba(56, 189, 248, 0.09);
+  transform: translateY(-2px);
+}
+
+.Cheney_kbDrop input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.Cheney_kbDrop__mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 4px;
+  border: 1px solid var(--Cheney-line-strong);
+  border-radius: 13px;
+  place-items: center;
+  color: var(--Cheney-cyan);
+  font-size: 28px;
+  font-weight: 300;
+}
+
+.Cheney_kbDrop strong {
+  max-width: 100%;
+  color: var(--Cheney-ink);
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.Cheney_kbDrop span:last-child {
+  color: var(--Cheney-ink-muted);
+  font-size: 12px;
+}
+
+.Cheney_kbUploadActions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.Cheney_kbOperation {
+  min-height: 22px;
+  color: var(--Cheney-ink-muted);
+  font-size: 13px;
+}
+
+.Cheney_kbOperation.Cheney_is-error {
+  color: #ffb4c8;
+}
+
+.Cheney_kbOperation.Cheney_is-success {
+  color: var(--Cheney-mint);
+}
+
+.Cheney_kbTableWrap {
+  overflow-x: auto;
+}
+
+.Cheney_kbTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.Cheney_kbTable th {
+  padding: 10px 9px;
+  border-bottom: 1px solid var(--Cheney-line-strong);
+  color: var(--Cheney-ink-muted);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.Cheney_kbTable td {
+  padding: 13px 9px;
+  border-bottom: 1px solid var(--Cheney-line);
+  color: var(--Cheney-ink-soft);
+  vertical-align: middle;
+}
+
+.Cheney_kbTable tr:last-child td {
+  border-bottom: 0;
+}
+
+.Cheney_kbFileName {
+  display: block;
+  max-width: 230px;
+  color: var(--Cheney-ink);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.Cheney_kbFileError {
+  display: block;
+  max-width: 230px;
+  margin-top: 3px;
+  color: #ffb4c8;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.Cheney_kbStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.Cheney_kbStatus::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--Cheney-amber);
+  content: "";
+}
+
+.Cheney_kbStatus--ready {
+  color: var(--Cheney-mint);
+}
+
+.Cheney_kbStatus--ready::before {
+  background: var(--Cheney-mint);
+  box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+}
+
+.Cheney_kbStatus--failed {
+  color: #ffb4c8;
+}
+
+.Cheney_kbStatus--failed::before {
+  background: var(--Cheney-rose);
+}
+
+.Cheney_kbActions {
+  display: flex;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.Cheney_kbAction {
+  padding: 4px 7px;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(76, 125, 255, 0.12);
+  color: var(--Cheney-cyan);
+  font-family: var(--Cheney-font);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.Cheney_kbAction:hover {
+  background: rgba(76, 125, 255, 0.28);
+}
+
+.Cheney_kbAction--danger {
+  color: #ffb4c8;
+}
+
+.Cheney_kbChunkList {
+  display: grid;
+  max-height: 480px;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.Cheney_kbChunk {
+  padding: 14px 16px;
+  border: 1px solid var(--Cheney-line);
+  border-radius: 12px;
+  background: rgba(6, 11, 24, 0.55);
+}
+
+.Cheney_kbChunk__label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--Cheney-cyan);
+  font-family: var(--Cheney-mono);
+  font-size: 11px;
+}
+
+.Cheney_kbChunk p {
+  margin: 0;
+  color: var(--Cheney-ink-soft);
+  font-size: 13px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.Cheney_kbChat {
+  position: sticky;
+  top: 94px;
+  display: flex;
+  max-height: calc(100vh - 116px);
+  min-height: 650px;
+  flex-direction: column;
+}
+
+.Cheney_kbOnline {
+  padding: 3px 9px;
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  border-radius: 999px;
+  color: var(--Cheney-mint);
+  font-family: var(--Cheney-mono);
+  font-size: 11px;
+}
+
+.Cheney_kbScope {
+  margin-bottom: 12px;
+}
+
+.Cheney_kbMessages {
+  display: flex;
+  min-height: 260px;
+  padding: 4px 5px 4px 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.Cheney_kbMessage {
+  max-width: 92%;
+  padding: 11px 14px;
+  border: 1px solid var(--Cheney-line);
+  border-radius: 5px 15px 15px 15px;
+  background: rgba(15, 24, 50, 0.85);
+  align-self: flex-start;
+}
+
+.Cheney_kbMessage--user {
+  border-color: rgba(56, 189, 248, 0.25);
+  border-radius: 15px 5px 15px 15px;
+  background: rgba(76, 125, 255, 0.2);
+  align-self: flex-end;
+}
+
+.Cheney_kbMessage--error {
+  border-color: rgba(244, 114, 182, 0.35);
+  color: #ffc9d6;
+}
+
+.Cheney_kbMessage__role {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--Cheney-cyan);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.Cheney_kbMessage p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.Cheney_kbSources {
+  display: grid;
+  gap: 7px;
+  margin-top: 11px;
+  padding-top: 10px;
+  border-top: 1px solid var(--Cheney-line);
+}
+
+.Cheney_kbSource {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(6, 11, 24, 0.7);
+}
+
+.Cheney_kbSource__title {
+  display: block;
+  color: var(--Cheney-mint);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.Cheney_kbSource__text {
+  display: block;
+  margin-top: 4px;
+  color: var(--Cheney-ink-muted);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.Cheney_kbQuick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+.Cheney_kbQuick button {
+  padding: 5px 9px;
+  border: 1px solid var(--Cheney-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--Cheney-ink-muted);
+  font-family: var(--Cheney-font);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.Cheney_kbQuick button:hover {
+  border-color: var(--Cheney-cyan);
+  color: var(--Cheney-cyan);
+}
+
+.Cheney_kbChatForm {
+  display: grid;
+  gap: 10px;
+}
+
+.Cheney_kbQuestion {
+  width: 100%;
+  min-height: 82px;
+  padding: 11px 13px;
+  resize: vertical;
+  border: 1px solid var(--Cheney-line);
+  border-radius: 12px;
+  outline: none;
+  background: rgba(6, 11, 24, 0.85);
+  color: var(--Cheney-ink);
+  font-family: var(--Cheney-font);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.Cheney_kbQuestion:focus {
+  border-color: var(--Cheney-cyan);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+}
+
+@media (max-width: 980px) {
+  .Cheney_kbLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .Cheney_kbChat {
+    position: static;
+    max-height: none;
+    min-height: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  .Cheney_kbUploadActions,
+  .Cheney_kbSectionHead {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .Cheney_kbChat {
+    min-height: 560px;
+    padding: 18px;
+  }
+}

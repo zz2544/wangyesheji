@@ -68,3 +68,39 @@ VALUES
   ('山区光伏矩阵', 'images/Cheney_gallery_8.svg', '坡地上的双轴跟踪支架随日照调整角度，单站年发电量较固定支架提升 21%。', '宁夏 · 光伏基地', '2026-11-08', '新能源,光伏', 65),
   ('智慧工厂的数字孪生大屏', 'images/Cheney_gallery_9.svg', '产线节拍、设备健康度与在制品库存实时映射到三维模型，异常工位在 3 秒内高亮告警。', '苏州 · 智能制造园', '2026-11-06', '工业互联网,数字孪生', 60),
   ('自动驾驶测试场夜间场景', 'images/Cheney_gallery_10.svg', '雨雾与逆光工况下的感知验证，激光雷达与视觉融合在夜间仍能识别 120 米外的小目标。', '武汉 · 测试场', '2026-11-04', '智能驾驶,传感器', 55);
+
+-- ============ 表 3：知识库文件 ============
+DROP TABLE IF EXISTS Cheney_kb_chunks;
+DROP TABLE IF EXISTS Cheney_kb_documents;
+CREATE TABLE Cheney_kb_documents (
+  Cheney_id             INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '知识文件主键',
+  Cheney_original_name  VARCHAR(255) NOT NULL COMMENT '原始文件名',
+  Cheney_stored_name    VARCHAR(255) NOT NULL COMMENT '服务器存储文件名',
+  Cheney_file_path      VARCHAR(500) NOT NULL COMMENT '服务器相对路径',
+  Cheney_extension      VARCHAR(10)  NOT NULL COMMENT '文件扩展名',
+  Cheney_mime           VARCHAR(120) DEFAULT NULL COMMENT 'MIME 类型',
+  Cheney_size           INT UNSIGNED NOT NULL COMMENT '文件字节数',
+  Cheney_sha256         CHAR(64)     NOT NULL COMMENT '文件 SHA-256',
+  Cheney_status         ENUM('processing', 'ready', 'failed') NOT NULL DEFAULT 'processing' COMMENT '解析状态',
+  Cheney_error          TEXT         DEFAULT NULL COMMENT '失败原因',
+  Cheney_chunk_count    INT UNSIGNED NOT NULL DEFAULT 0 COMMENT '知识块数量',
+  Cheney_created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
+  Cheney_updated_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (Cheney_id),
+  UNIQUE KEY Cheney_uq_kb_stored_name (Cheney_stored_name),
+  KEY Cheney_idx_kb_status (Cheney_status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='RAG 知识库文件表';
+
+-- ============ 表 4：知识库文本分块 ============
+CREATE TABLE Cheney_kb_chunks (
+  Cheney_id           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '知识块主键',
+  Cheney_document_id  INT UNSIGNED NOT NULL COMMENT '所属知识文件',
+  Cheney_chunk_index  INT UNSIGNED NOT NULL COMMENT '文档内块序号',
+  Cheney_content      TEXT NOT NULL COMMENT '知识块正文',
+  PRIMARY KEY (Cheney_id),
+  UNIQUE KEY Cheney_uq_kb_document_chunk (Cheney_document_id, Cheney_chunk_index),
+  KEY Cheney_idx_kb_chunk_document (Cheney_document_id),
+  CONSTRAINT Cheney_fk_kb_chunk_document
+    FOREIGN KEY (Cheney_document_id) REFERENCES Cheney_kb_documents (Cheney_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='RAG 知识文本分块表';

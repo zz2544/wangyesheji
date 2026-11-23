@@ -28,8 +28,12 @@
 
     const Cheney_fetchOptions = { method: Cheney_method, headers: {} };
     if (Cheney_options.body !== undefined) {
-      Cheney_fetchOptions.headers['Content-Type'] = 'application/json';
-      Cheney_fetchOptions.body = JSON.stringify(Cheney_options.body);
+      if (typeof FormData !== 'undefined' && Cheney_options.body instanceof FormData) {
+        Cheney_fetchOptions.body = Cheney_options.body;
+      } else {
+        Cheney_fetchOptions.headers['Content-Type'] = 'application/json';
+        Cheney_fetchOptions.body = JSON.stringify(Cheney_options.body);
+      }
     }
 
     console.log(`[Cheney] 请求接口 ${Cheney_method} ${Cheney_url}`, Cheney_options.body || '');

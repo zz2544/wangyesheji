@@ -8,6 +8,7 @@ const Cheney_router = Cheney_express.Router();
 const Cheney_newsRoutes = require('./Cheney_newsRoutes');
 const Cheney_galleryRoutes = require('./Cheney_galleryRoutes');
 const Cheney_databaseRoutes = require('./Cheney_databaseRoutes');
+const Cheney_knowledgeRoutes = require('./Cheney_knowledgeRoutes');
 
 /** GET /api/health —— 服务健康检查 */
 Cheney_router.get('/health', (req, res) => {
@@ -25,5 +26,6 @@ Cheney_router.get('/health', (req, res) => {
 Cheney_router.use('/news', Cheney_newsRoutes);
 Cheney_router.use('/gallery', Cheney_galleryRoutes);
 Cheney_router.use('/database', Cheney_databaseRoutes);
+Cheney_router.use('/knowledge', Cheney_knowledgeRoutes);
 
 module.exports = Cheney_router;

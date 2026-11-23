@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--
+  姓名：张硕 | 学号：24006380115 | 时间：2026-11-23 | 大模型：Kimi-K3.1-Pro
+  页面：知识库管理与 RAG 智能问答 knowledge.html
+-->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <title>知识库问答 · 星穹科技资讯站</title>
+  <link rel="stylesheet" href="css/Cheney_base.css" />
+  <link rel="stylesheet" href="css/Cheney_knowledge.css" />
+</head>
+<body class="Cheney_body">
+  <nav class="Cheney_nav">
+    <a class="Cheney_nav__brand" href="index.html">
+      <span class="Cheney_nav__logo">✦</span>
+      星穹科技资讯站
+    </a>
+    <ul class="Cheney_nav__links">
+      <li><a class="Cheney_nav__link" href="index.html">首页</a></li>
+      <li><a class="Cheney_nav__link" href="news.html">科技新闻</a></li>
+      <li><a class="Cheney_nav__link" href="gallery.html">图文列表</a></li>
+      <li><a class="Cheney_nav__link" href="database.html">数据库测试</a></li>
+      <li><a class="Cheney_nav__link Cheney_is-active" href="knowledge.html">知识库问答</a></li>
+    </ul>
+  </nav>
+
+  <main class="Cheney_main">
+    <header class="Cheney_pageHead">
+      <span class="Cheney_pageHead__tag">RAG · 本地知识检索 · DeepSeek</span>
+      <h1 class="Cheney_pageHead__title">知识库管理与<em>智能问答</em></h1>
+      <p class="Cheney_pageHead__desc">
+        上传 PDF、TXT、DOC、DOCX、PPT、PPTX 文件，后端自动解析并分块。
+        提问时先检索相关知识，再把问题和上下文发送给 DeepSeek，回答附来源引用。
+      </p>
+    </header>
+
+    <div class="Cheney_notice">
+      模型请求与原始响应会完整输出到后端终端，不会输出 API Key；浏览器控制台同步记录知识库 API 请求与返回。
+    </div>
+
+    <div class="Cheney_kbLayout">
+      <div class="Cheney_kbManage">
+        <section class="Cheney_card Cheney_kbUpload">
+          <div class="Cheney_kbSectionHead">
+            <div>
+              <span class="Cheney_kbEyebrow">KNOWLEDGE UPLOAD</span>
+              <h2>上传知识文件</h2>
+            </div>
+            <span class="Cheney_tag Cheney_tag--mint">单文件 ≤ 20MB</span>
+          </div>
+          <form id="Cheney_uploadForm">
+            <label class="Cheney_kbDrop" for="Cheney_fileInput" id="Cheney_dropLabel">
+              <input id="Cheney_fileInput" type="file" name="file"
+                accept=".pdf,.txt,.doc,.docx,.ppt,.pptx" required />
+              <span class="Cheney_kbDrop__mark">+</span>
+              <strong id="Cheney_fileName">选择或拖入知识库文件</strong>
+              <span>支持 PDF / TXT / DOC / DOCX / PPT / PPTX</span>
+            </label>
+            <div class="Cheney_kbUploadActions">
+              <button class="Cheney_btn Cheney_btn--primary" type="submit" id="Cheney_uploadBtn">上传并解析</button>
+              <span class="Cheney_kbOperation" id="Cheney_uploadStatus">等待选择文件</span>
+            </div>
+          </form>
+        </section>
+
+        <section class="Cheney_card Cheney_kbDocuments">
+          <div class="Cheney_kbSectionHead">
+            <div>
+              <span class="Cheney_kbEyebrow">DOCUMENT MANAGEMENT</span>
+              <h2>知识文件管理</h2>
+            </div>
+            <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_refreshBtn">刷新列表</button>
+          </div>
+          <div class="Cheney_kbTableWrap">
+            <table class="Cheney_kbTable">
+              <thead>
+                <tr><th>文件名</th><th>格式</th><th>大小</th><th>知识块</th><th>状态</th><th>操作</th></tr>
+              </thead>
+              <tbody id="Cheney_documentBody">
+                <tr><td colspan="6" class="Cheney_state">正在加载知识库文件…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="Cheney_kbOperation" id="Cheney_manageStatus"></div>
+        </section>
+
+        <section class="Cheney_card Cheney_kbDetail" id="Cheney_detailPanel" hidden>
+          <div class="Cheney_kbSectionHead">
+            <div>
+              <span class="Cheney_kbEyebrow">PARSED CONTENT</span>
+              <h2 id="Cheney_detailTitle">文档分块</h2>
+            </div>
+            <button class="Cheney_btn Cheney_btn--ghost" type="button" id="Cheney_closeDetail">关闭</button>
+          </div>
+          <div class="Cheney_kbChunkList" id="Cheney_chunkList"></div>
+        </section>
+      </div>
+
+      <aside class="Cheney_card Cheney_kbChat">
+        <div class="Cheney_kbSectionHead">
+          <div>
+            <span class="Cheney_kbEyebrow">KNOWLEDGE ASSISTANT</span>
+            <h2>专属自动客服</h2>
+          </div>
+          <span class="Cheney_kbOnline">RAG</span>
+        </div>
+        <div class="Cheney_field Cheney_kbScope">
+          <label class="Cheney_field__label" for="Cheney_chatScope">检索范围</label>
+          <select class="Cheney_select" id="Cheney_chatScope">
+            <option value="">全部知识文件</option>
+          </select>
+        </div>
+        <div class="Cheney_kbMessages" id="Cheney_messages" aria-live="polite">
+          <article class="Cheney_kbMessage Cheney_kbMessage--assistant">
+            <span class="Cheney_kbMessage__role">知识库客服</span>
+            <p>你好，我会先检索已上传的知识文件，再根据检索结果回答。可以试试下方的示例问题。</p>
+          </article>
+        </div>
+        <div class="Cheney_kbQuick">
+          <button type="button" data-cheney-question="智能客服支持哪些文件格式？">支持哪些文件格式？</button>
+          <button type="button" data-cheney-question="产品的保修期是多久？">保修期是多久？</button>
+        </div>
+        <form class="Cheney_kbChatForm" id="Cheney_chatForm">
+          <textarea class="Cheney_kbQuestion" id="Cheney_question" rows="3" maxlength="2000"
+            placeholder="输入与知识库相关的问题…" required></textarea>
+          <button class="Cheney_btn Cheney_btn--primary" type="submit" id="Cheney_sendBtn">发送问题</button>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="Cheney_footer">
+    星穹科技资讯站 · 张硕 24006380115　|　知识库接口：<a href="/api/knowledge/documents" target="_blank" rel="noopener">/api/knowledge/documents</a>
+  </footer>
+
+  <script src="js/Cheney_request.js"></script>
+  <script src="js/Cheney_knowledge.js"></script>
+</body>
+</html>
