@@ -1,6 +1,6 @@
 /**
  * 姓名：张硕 | 学号：24006380115 | 时间：2026-11-19 | 大模型：DeepSeek-V4.1-Flash
- * 作用：后端入口。CORS + JSON 解析 + /api 路由 + express.static 托管 frontend/，端口 115
+ * 作用：后端入口。CORS + JSON 解析 + /api 路由 + express.static 托管 frontend/，端口 8115（.env 的 PORT）
  */
 const path = require('path');
 const express = require('express');
@@ -11,7 +11,7 @@ const Cheney_indexRoutes = require('./routes/Cheney_indexRoutes');
 const { Cheney_fail } = require('./config/Cheney_response');
 
 const Cheney_app = express();
-const Cheney_PORT = Number(process.env.PORT || 115);
+const Cheney_PORT = Number(process.env.PORT || 8115);
 const Cheney_frontendDir = path.join(__dirname, '..', 'frontend');
 
 // 支持所有跨域访问

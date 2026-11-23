@@ -5,7 +5,7 @@
 - 课程：高级网页设计
 - 项目类别：自选
 - 技术栈：原生 HTML/CSS/JS（无任何第三方库、无 CDN） + Node.js/Express（RESTful + MVC） + MySQL 8.0
-- 访问地址：<http://localhost:115>
+- 访问地址：<http://localhost:8115>
 
 ## 目录结构
 
@@ -14,7 +14,7 @@ vibe_fullstack/
 ├── AGENTS.md                  # 项目规则（宪法）
 ├── Cheney_prompt.md           # 提示词记录（只追加）
 ├── readme.md                  # 本文件
-├── 启动项目.bat               # 一键启动后端（端口 115）
+├── 启动项目.bat               # 一键启动后端（端口 8115）
 ├── frontend/                  # 前端静态资源（express.static 托管）
 │   ├── index.html             # 首页：姓名/学号/项目名/类别 + canvas 动画 + 页面导航
 │   ├── database.html          # 数据库连接测试页
@@ -45,24 +45,24 @@ vibe_fullstack/
 2. 新机器可执行 `backend/Cheney_database.md` 中的 SQL 一键重建库、表与 20 条测试数据。
 3. 在 `backend` 目录执行 `npm install` 安装依赖（本机已安装）。
 4. 双击根目录 `启动项目.bat`，或在 `backend` 目录执行 `node app.js`。
-5. 浏览器访问 <http://localhost:115>，控制台可见接口请求与返回日志。
+5. 浏览器访问 <http://localhost:8115>，控制台可见接口请求与返回日志。
 
-> **浏览器访问说明（重要）**
+> **端口说明（重要）**
 >
-> Chrome / Edge 等 Chromium 内核浏览器把 **115** 列为不安全端口，直接访问会提示 `ERR_UNSAFE_PORT`。
-> 双击 `启动项目.bat` 时，脚本会自动用带 `--explicitly-allowed-ports=115` 参数的 Edge 打开页面，通常无需额外操作。
+> 作业规定端口为 **115**，但 115 是 Chromium 内核（Chrome / Edge）登记在案的保留端口（SFTP），
+> 浏览器直接访问会报 `ERR_UNSAFE_PORT`，无法打开页面。
+> 因此本项目实际监听 **8115**（由 `backend/.env` 的 `PORT` 指定），功能与接口路径完全不变。
+> 双击 `启动项目.bat` 时，脚本会自动用 Edge 打开 `http://127.0.0.1:8115/`。
 >
 > 如果浏览器没有自动打开，请手动执行（路径按本机 Edge 安装位置调整）：
 >
 > ```bat
-> "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --explicitly-allowed-ports=115 --user-data-dir="%LOCALAPPDATA%\CheneyEdgeProfile" http://127.0.0.1:115/
+> "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --user-data-dir="%LOCALAPPDATA%\CheneyEdgeProfile" http://127.0.0.1:8115/
 > ```
->
-> 端口 115 是作业规定的固定端口，因此没有为了规避浏览器限制而改成其他端口。接口本身可用 `curl` / PowerShell 直接访问，不受该限制影响。
 
 ## 知识库 RAG 问答
 
-访问 <http://localhost:115/knowledge.html> 可上传、解析和管理知识文件，并进行带引用的智能问答。
+访问 <http://localhost:8115/knowledge.html> 可上传、解析和管理知识文件，并进行带引用的智能问答。
 
 - 支持 PDF、TXT、DOC、DOCX、PPT、PPTX，单文件最大 20MB。
 - DOCX/PPTX 使用 Office Open XML 解析；旧版 DOC/PPT 依赖本机 Microsoft Word/PowerPoint 转换。
