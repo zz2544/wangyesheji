@@ -8,7 +8,7 @@
   - 目录结构：frontend/ 下建 css/、js/、fonts/、images/ 子目录；
     fonts/ 存放 iconfont 图标文件（如果有）
 - 后端：backend/ 目录，Node.js + Express，RESTful+MVC 风格，
-  所有接口以 /api/ 为前缀，端口固定为 115，
+  所有接口以 /api/ 为前缀，端口固定为 8115（由 backend/.env 的 PORT 指定），
   并以 express.static 托管 frontend/ 目录
   后端支持所有跨域访问。
 - 后端依赖安装：优先 cnpm i 包名；失败或超时则使用 npm i 包名
@@ -44,5 +44,10 @@
 ## 本地备注（非课程规则）
 - 本机未安装 cnpm，后端依赖统一用 npm 安装（npm 11.17.0 / Node 24.19.0）。
 - 启动方式：双击根目录 `启动项目.bat`，或 `cd backend && node app.js`。
-- Chromium 内核（Chrome/Edge）把 115 视为不安全端口，直接访问会报 `ERR_UNSAFE_PORT`；
-  `启动项目.bat` 会自动加 `--explicitly-allowed-ports=115` 打开 Edge，手动访问需带同样参数。
+- 访问地址：`http://127.0.0.1:8115/`（`.env` 中 `PORT=8115`）。
+- **不要改回 115**：Chromium 内核（Chrome/Edge）把 115 列为不安全端口，直接访问必报
+  `ERR_UNSAFE_PORT`，须加 `--explicitly-allowed-ports=115` 才能打开，答辩时极易翻车。
+  `scripts/Cheney_openBrowser.js` 读取 `process.env.PORT` 拼地址，改端口无需同步改代码。
+- 大模型密钥（`OPENAI_API_KEY`）存放于 **Windows 用户级环境变量**，不写入 `backend/.env`；
+  `dotenv` 不会覆盖已存在的环境变量，因此配置即生效。换机器时执行
+  `setx OPENAI_API_KEY "sk-..."` 后重开终端。`backend/.env.example` 为可提交的配置模板。

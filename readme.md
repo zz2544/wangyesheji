@@ -60,6 +60,24 @@ vibe_fullstack/
 >
 > 端口 115 是作业规定的固定端口，因此没有为了规避浏览器限制而改成其他端口。接口本身可用 `curl` / PowerShell 直接访问，不受该限制影响。
 
+## 知识库 RAG 问答
+
+访问 <http://localhost:115/knowledge.html> 可上传、解析和管理知识文件，并进行带引用的智能问答。
+
+- 支持 PDF、TXT、DOC、DOCX、PPT、PPTX，单文件最大 20MB。
+- DOCX/PPTX 使用 Office Open XML 解析；旧版 DOC/PPT 依赖本机 Microsoft Word/PowerPoint 转换。
+- 文档文本切分后存入 `Cheney_kb_chunks`，通过本地 TF-IDF 检索 TopK，再调用 DeepSeek 生成答案。
+- `backend/knowledge-samples/` 提供产品与售后两份演示知识文件。
+- 在 `backend/.env` 配置以下变量后重启服务：
+
+```dotenv
+OPENAI_BASE_URL=https://api.deepseek.com
+OPENAI_MODEL=deepseek-chat
+OPENAI_API_KEY=你的密钥
+```
+
+未配置密钥时仍可使用上传、管理和检索功能，模型问答会返回明确的 503 配置提示。后端终端完整打印发送给 DeepSeek 的 JSON 和接收的原始响应，不打印 API Key。
+
 ## 接口一览
 
 | 接口 | 方法 | 参数 | 说明 |
@@ -71,6 +89,12 @@ vibe_fullstack/
 | `/api/news/:id` | GET | 路径参数 `id` | 科技新闻详情，每次访问阅读量 +1 |
 | `/api/gallery` | GET | `keyword`、`tag`、`page`、`pageSize` | 图文列表，按排序值与拍摄日期倒序，`pageSize` 上限 50 |
 | `/api/gallery/:id` | GET | 路径参数 `id` | 图文详情 |
+| `/api/knowledge/upload` | POST | multipart 字段 `file` | 上传并解析知识文件，单文件最大 20MB |
+| `/api/knowledge/documents` | GET | 无 | 知识文件列表与解析状态 |
+| `/api/knowledge/documents/:id` | GET | 路径参数 `id` | 文件详情与知识分块 |
+| `/api/knowledge/documents/:id` | DELETE | 路径参数 `id` | 删除文件、分块和服务器原文件 |
+| `/api/knowledge/documents/:id/rebuild` | POST | 路径参数 `id` | 从原文件重新解析分块 |
+| `/api/knowledge/chat` | POST | `question` 必填；`documentId`、`topK` 可选 | 本地检索 + DeepSeek RAG 问答，返回引用 |
 
 统一响应格式：`{ "code": 0, "msg": "提示信息", "data": {...} }`，`code=0` 成功，非 0 失败。
 参数错误返回 HTTP 400 与 `code=400`，资源不存在返回 HTTP 404 与 `code=404`；数据库连接测试失败返回 HTTP 200 与 `code=1001`，便于前端统一渲染提示。
